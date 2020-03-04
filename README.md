@@ -15,7 +15,7 @@
 
 ◍ Run the bot:
 
-    • python -m nicegrill login
+    • python -m nicegrill
 
 ## DIRECT DEPLOY TO HEROKU
 
