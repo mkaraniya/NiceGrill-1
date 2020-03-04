@@ -17,6 +17,7 @@ import logging
 import asyncio
 from telethon import events
 from database import settingsdb as settings
+from database import blacklistdb as blacklist
 from nicegrill.modules import _init
 
 logging.basicConfig(
@@ -37,11 +38,13 @@ class Main:
     loadclient = None
 
     async def outgoing(message):
+        prefix = await settings.check_prefix()
+        if not message.raw_text.startswith(prefix + "whitelist") and await blacklist.check_blacklist(message.chat_id):
+            return
         mods = {}
         ls = [_init.modules[obj] for obj in _init.modules]
         for item in ls:
             mods.update(item)
-        prefix = await settings.check_prefix()
         if getattr(message, "message") and message.text.startswith(prefix):
             if message.text.startswith(prefix * 2):
                 await message.edit(message.text[1:])
