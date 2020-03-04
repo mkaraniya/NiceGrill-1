@@ -26,7 +26,7 @@ class Blacklist:
 
     async def whitelistxxx(message):
         chat = message.chat_id
-        if not blacklist.check_blacklist(chat):
+        if await blacklist.check_blacklist(chat):
             await blacklist.delete_blacklist(chat)
             await message.edit("<i>This chat is now whitelisted</i>")
         else:
