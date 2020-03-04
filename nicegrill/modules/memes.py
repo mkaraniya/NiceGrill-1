@@ -15,6 +15,8 @@
 
 import logging
 from nicegrill import utils
+from database import blacklistdb as blacklist
+from database import settingsdb as settings
 import time
 import random
 
@@ -45,6 +47,8 @@ class Memes:
         await message.edit(f"<i>This person is {random.randint(0,101)}% gay</i>")
 
     async def watchout(message):
+        if await blacklist.check_blacklist(message.chat_id):
+            return            
         if message.text.lower() == "yey":
             for i in range(10):
                 await message.edit("Y" + "e" * i + "y")
